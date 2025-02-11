@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .choices img {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .scoreboard {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .computer-choice-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        #computer-choice-img {
+            width: 100px;
+            height: 100px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <div class="choices">
+        <img src="rock.webp" alt="Rock" onclick="playGame('rock')">
+        <img src="paper.webp" alt="Paper" onclick="playGame('paper')">
+        <img src="scissors.webp" alt="Scissors" onclick="playGame('scissors')">
+    </div>
+    
+    <div class="computer-choice-container">
+        <p id="computer-choice"></p>
+        <img id="computer-choice-img" src="" alt="Computer Choice">
+    </div>
+    
+    <p id="result"></p>
+    <div class="scoreboard">
+        <p>User Score: <span id="user-score">0</span></p>
+        <p>Computer Score: <span id="computer-score">0</span></p>
+    </div>
+
+    <script>
+        let userScore = 0;
+        let computerScore = 0;
+
+        function playGame(userChoice) {
+            const options = ["rock", "paper", "scissors"];
+            const computerChoice = options[Math.floor(Math.random() * options.length)];
+            document.getElementById("computer-choice").textContent = `Computer chose: ${computerChoice}`;
+            
+            const computerChoiceImg = document.getElementById("computer-choice-img");
+            computerChoiceImg.src = `${computerChoice}.webp`;
+            computerChoiceImg.style.display = "block";
+            
+            if (userChoice === computerChoice) {
+                document.getElementById("result").textContent = "TIE!";
+            } else if ((userChoice === "rock" && computerChoice === "scissors") ||
+                       (userChoice === "paper" && computerChoice === "rock") ||
+                       (userChoice === "scissors" && computerChoice === "paper")) {
+                document.getElementById("result").textContent = "YOU WIN!";
+                userScore++;
+            } else {
+                document.getElementById("result").textContent = "YOU LOSE!";
+                computerScore++;
+            }
+            
+            document.getElementById("user-score").textContent = userScore;
+            document.getElementById("computer-score").textContent = computerScore;
+        }
+    </script>
+</body>
+</html>
